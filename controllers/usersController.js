@@ -112,8 +112,8 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 
   // Does the user still have assigned notes?
-  const notes = await Note.findOne({ user: id }).lean().exec();
-  if (notes) {
+  const note = await Note.findOne({ user: id }).lean().exec();
+  if (note) {
     return res.status(400).json({ message: "User has assigned notes" });
   }
 
@@ -126,7 +126,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 
   const result = await user.deleteOne();
 
-  const reply = `User successfully deleted`;
+  const reply = `Username ${result.username} with ID ${result._id} deleted`;
 
   res.json(reply);
 });
